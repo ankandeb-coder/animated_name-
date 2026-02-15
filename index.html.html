@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANKANDEB BARMAN - Animated</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(45deg, #000000, #1a0033, #330066, #000033);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles in background */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            box-shadow: 0 0 100px rgba(138, 43, 226, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .name-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .letter {
+            font-size: 80px;
+            font-weight: bold;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100px) rotateX(-90deg) scale(0);
+            animation: letterAppear 1s forwards;
+            background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #9370db, #ff1493);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 128, 0.8);
+            filter: drop-shadow(0 0 20px rgba(255, 0, 128, 0.6));
+            position: relative;
+        }
+
+        .letter::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(20px);
+            opacity: 0.7;
+        }
+
+        @keyframes letterAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) rotateX(-90deg) scale(0);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(10deg) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0) scale(1);
+            }
+        }
+
+        .letter:hover {
+            animation: letterHover 0.5s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes letterHover {
+            0%, 100% {
+                transform: translateY(0) rotateZ(0deg) scale(1);
+            }
+            25% {
+                transform: translateY(-15px) rotateZ(-5deg) scale(1.15);
+            }
+            75% {
+                transform: translateY(-15px) rotateZ(5deg) scale(1.15);
+            }
+        }
+
+        .space {
+            width: 30px;
+        }
+
+        /* Continuous animations after letters appear */
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .letter.animated {
+            animation: colorShift 3s ease infinite, float3D 4s ease-in-out infinite;
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translateY(0) rotateY(0deg) rotateX(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
+            }
+            50% {
+                transform: translateY(0) rotateY(0deg) rotateX(0deg);
+            }
+            75% {
+                transform: translateY(-10px) rotateY(-5deg) rotateX(-5deg);
+            }
+        }
+
+        /* Glowing rings around container */
+        .glow-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid rgba(255, 0, 128, 0.3);
+            border-radius: 50%;
+            animation: ringPulse 3s infinite;
+        }
+
+        .glow-ring:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            animation-delay: 0s;
+        }
+
+        .glow-ring:nth-child(2) {
+            width: 700px;
+            height: 700px;
+            animation-delay: 1s;
+        }
+
+        .glow-ring:nth-child(3) {
+            width: 800px;
+            height: 800px;
+            animation-delay: 2s;
+        }
+
+        @keyframes ringPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Subtitle animation */
+        .subtitle {
+            font-size: 24px;
+            color: #fff;
+            opacity: 0;
+            animation: subtitleFade 2s forwards;
+            animation-delay: 3s;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            letter-spacing: 5px;
+        }
+
+        @keyframes subtitleFade {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Lightning effect */
+        .lightning {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #fff, transparent);
+            opacity: 0;
+            animation: lightning 4s infinite;
+        }
+
+        @keyframes lightning {
+            0%, 100% {
+                opacity: 0;
+            }
+            45%, 55% {
+                opacity: 0;
+            }
+            49%, 51% {
+                opacity: 1;
+                box-shadow: 0 0 20px #fff, 0 0 40px #fff;
+            }
+        }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white;
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-300px, 300px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .letter {
+                font-size: 40px;
+            }
+            .container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="glow-ring"></div>
+    <div class="glow-ring"></div>
+    <div class="glow-ring"></div>
+
+    <!-- Black Hole Element -->
+    <div id="blackHole" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0px;
+        height: 0px;
+        border-radius: 50%;
+        background: radial-gradient(circle at center, #000000 0%, #000000 30%, #1a0033 40%, #4d0099 50%, #ff6600 60%, transparent 70%);
+        box-shadow: 
+            0 0 100px 50px rgba(255, 100, 0, 0),
+            inset 0 0 100px rgba(0, 0, 0, 1);
+        opacity: 0;
+        z-index: 5;
+        pointer-events: none;
+        transition: all 2s ease-out;
+    "></div>
+
+    <!-- Accretion Disk -->
+    <div id="accretionDisk" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotateX(75deg);
+        width: 0px;
+        height: 0px;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, 
+            transparent 0%, 
+            transparent 40%,
+            rgba(255, 100, 0, 0.8) 45%,
+            rgba(255, 150, 0, 0.6) 50%,
+            rgba(255, 200, 0, 0.4) 55%,
+            rgba(100, 50, 200, 0.3) 65%,
+            transparent 75%);
+        opacity: 0;
+        z-index: 4;
+        pointer-events: none;
+        animation: accretionRotate 3s linear infinite;
+        transition: all 2s ease-out;
+    "></div>
+
+    <style>
+        @keyframes accretionRotate {
+            from { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
+            to { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+        }
+
+        /* Gravitational lensing effect */
+        .lensing-active {
+            filter: blur(2px) brightness(1.5);
+            animation: gravitationalLens 0.5s ease-in-out;
+        }
+
+        @keyframes gravitationalLens {
+            0%, 100% {
+                transform: scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            50% {
+                transform: scale(1.1);
+                filter: blur(3px) brightness(1.8) hue-rotate(30deg);
+            }
+        }
+    </style>
+
+    <!-- Main container -->
+    <div class="container">
+        <div class="name-container" id="nameContainer"></div>
+        <div class="subtitle">✨ WELCOME TO THE ALONE GROUP ✨</div>
+    </div>
+
+    <script>
+        const name = "ANKANDEB BARMAN";
+        const container = document.getElementById('nameContainer');
+        
+        // Create particles
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(particle);
+        }
+
+        // Create shooting stars
+        for (let i = 0; i < 5; i++) {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.top = Math.random() * 50 + '%';
+            star.style.right = Math.random() * 50 + '%';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(star);
+        }
+
+        // Create lightning effects
+        for (let i = 0; i < 3; i++) {
+            const lightning = document.createElement('div');
+            lightning.className = 'lightning';
+            lightning.style.left = (20 + i * 30) + '%';
+            lightning.style.animationDelay = (i * 1.3) + 's';
+            document.body.appendChild(lightning);
+        }
+
+        // Type letters one by one
+        let delay = 0;
+        for (let i = 0; i < name.length; i++) {
+            setTimeout(() => {
+                const letter = document.createElement('span');
+                
+                if (name[i] === ' ') {
+                    letter.className = 'space';
+                } else {
+                    letter.className = 'letter';
+                    letter.textContent = name[i];
+                    letter.setAttribute('data-letter', name[i]);
+                    letter.style.animationDelay = '0s';
+                    
+                    // Add continuous animation after letter appears
+                    setTimeout(() => {
+                        letter.classList.add('animated');
+                    }, 1000);
+                    
+                    // Add click effect
+                    letter.addEventListener('click', function() {
+                        this.style.animation = 'none';
+                        setTimeout(() => {
+                            this.style.animation = '';
+                            this.classList.add('animated');
+                        }, 10);
+                    });
+                }
+                
+                container.appendChild(letter);
+                
+                // Play sound effect (optional - browser will play if available)
+                const audio = new Audio();
+                audio.volume = 0.1;
+                // You can add a sound file URL here if you want
+                
+            }, delay);
+            
+            delay += 150; // 150ms delay between each letter
+        }
+
+        // Add rainbow effect to background
+        let hue = 0;
+        setInterval(() => {
+            hue = (hue + 1) % 360;
+            document.body.style.filter = `hue-rotate(${hue}deg)`;
+        }, 50);
+
+        // Add mouse trail effect
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'particle';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            trail.style.position = 'fixed';
+            trail.style.pointerEvents = 'none';
+            trail.style.animation = 'float 2s forwards';
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.remove();
+            }, 2000);
+        });
+
+        // Add keyboard interaction
+        document.addEventListener('keypress', (e) => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach(letter => {
+                letter.style.transform = 'scale(1.2) rotateZ(' + (Math.random() * 20 - 10) + 'deg)';
+                setTimeout(() => {
+                    letter.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Random color burst effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            if (randomLetter) {
+                randomLetter.style.transform = 'scale(1.5) rotateY(360deg)';
+                randomLetter.style.transition = 'transform 0.5s';
+                setTimeout(() => {
+                    randomLetter.style.transform = '';
+                }, 500);
+            }
+        }, 3000);
+
+        // Wave effect - letters go up and down in sequence
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'translateY(-30px) scale(1.2)';
+                    letter.style.transition = 'transform 0.3s';
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                    }, 300);
+                }, index * 100);
+            });
+        }, 5000);
+
+        // Spin all letters together
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach(letter => {
+                letter.style.transform = 'rotateY(720deg) scale(1.3)';
+                letter.style.transition = 'transform 1s';
+                setTimeout(() => {
+                    letter.style.transform = '';
+                }, 1000);
+            });
+        }, 8000);
+
+        // Pulse effect - all letters pulse together
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach(letter => {
+                letter.style.transform = 'scale(1.4)';
+                letter.style.filter = 'brightness(2) drop-shadow(0 0 30px rgba(255, 0, 128, 1))';
+                letter.style.transition = 'all 0.2s';
+                setTimeout(() => {
+                    letter.style.transform = 'scale(1)';
+                    letter.style.filter = '';
+                }, 200);
+            });
+        }, 4000);
+
+        // Rainbow wave effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    const colors = ['#ff0080', '#ff8c00', '#ffff00', '#00ff00', '#00ffff', '#0080ff', '#8000ff'];
+                    const color = colors[index % colors.length];
+                    letter.style.filter = `drop-shadow(0 0 40px ${color}) brightness(1.5)`;
+                    setTimeout(() => {
+                        letter.style.filter = '';
+                    }, 500);
+                }, index * 80);
+            });
+        }, 6000);
+
+        // Shake effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            let shakeCount = 0;
+            const shakeInterval = setInterval(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = `translateX(${Math.random() * 10 - 5}px) translateY(${Math.random() * 10 - 5}px)`;
+                });
+                shakeCount++;
+                if (shakeCount > 10) {
+                    clearInterval(shakeInterval);
+                    letters.forEach(letter => {
+                        letter.style.transform = '';
+                    });
+                }
+            }, 50);
+        }, 10000);
+
+        // Zigzag movement
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    const direction = index % 2 === 0 ? 1 : -1;
+                    letter.style.transform = `translateX(${direction * 20}px) rotateZ(${direction * 15}deg)`;
+                    letter.style.transition = 'transform 0.3s';
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                    }, 300);
+                }, index * 50);
+            });
+        }, 7000);
+
+        // Flip effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'rotateX(360deg)';
+                    letter.style.transition = 'transform 0.6s';
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                    }, 600);
+                }, index * 100);
+            });
+        }, 9000);
+
+        // Glow pulse continuously
+        let glowIntensity = 0;
+        let glowDirection = 1;
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            glowIntensity += glowDirection * 0.1;
+            if (glowIntensity >= 2 || glowIntensity <= 0) {
+                glowDirection *= -1;
+            }
+            letters.forEach(letter => {
+                letter.style.filter = `brightness(${1 + glowIntensity}) drop-shadow(0 0 ${20 + glowIntensity * 20}px rgba(255, 0, 128, ${0.6 + glowIntensity * 0.3}))`;
+            });
+        }, 100);
+
+        // Spiral effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const radius = 50;
+            letters.forEach((letter, index) => {
+                const angle = (index / letters.length) * Math.PI * 2;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                letter.style.transform = `translate(${x}px, ${y}px) rotate(${angle * 180 / Math.PI}deg)`;
+                letter.style.transition = 'transform 0.8s';
+                setTimeout(() => {
+                    letter.style.transform = '';
+                }, 800);
+            });
+        }, 11000);
+
+        // Add more particles dynamically
+        setInterval(() => {
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = '100vh';
+                particle.style.position = 'absolute';
+                particle.style.width = (Math.random() * 5 + 3) + 'px';
+                particle.style.height = (Math.random() * 5 + 3) + 'px';
+                particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                particle.style.animation = `float ${Math.random() * 3 + 2}s forwards`;
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 5000);
+            }
+        }, 2000);
+
+        // Bounce effect - all letters bounce
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    let bounceHeight = 30;
+                    let bounces = 0;
+                    const bounceInterval = setInterval(() => {
+                        letter.style.transform = `translateY(-${bounceHeight}px)`;
+                        letter.style.transition = 'transform 0.15s';
+                        setTimeout(() => {
+                            letter.style.transform = 'translateY(0)';
+                        }, 150);
+                        bounceHeight *= 0.6;
+                        bounces++;
+                        if (bounces >= 3) {
+                            clearInterval(bounceInterval);
+                        }
+                    }, 300);
+                }, index * 80);
+            });
+        }, 13000);
+
+        // Matrix rain effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'translateY(50px)';
+                    letter.style.opacity = '0';
+                    letter.style.transition = 'all 0.5s';
+                    setTimeout(() => {
+                        letter.style.transform = 'translateY(0)';
+                        letter.style.opacity = '1';
+                    }, 500);
+                }, index * 100);
+            });
+        }, 15000);
+
+        // Tornado spin
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = `rotate(${360 * 2}deg) scale(0.5)`;
+                    letter.style.transition = 'transform 1s';
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                    }, 1000);
+                }, index * 50);
+            });
+        }, 17000);
+
+        // Elastic bounce extreme
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'scaleY(2) scaleX(0.5)';
+                    letter.style.transition = 'transform 0.1s';
+                    setTimeout(() => {
+                        letter.style.transform = 'scaleY(0.5) scaleX(2)';
+                        setTimeout(() => {
+                            letter.style.transform = '';
+                        }, 100);
+                    }, 100);
+                }, index * 60);
+            });
+        }, 19000);
+
+        // Color explosion effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach(letter => {
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                letter.style.filter = `drop-shadow(0 0 50px ${randomColor}) brightness(2)`;
+                letter.style.transform = 'scale(1.6)';
+                letter.style.transition = 'all 0.3s';
+                setTimeout(() => {
+                    letter.style.filter = '';
+                    letter.style.transform = '';
+                }, 300);
+            });
+        }, 20000);
+
+        // DNA Helix rotation
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const centerIndex = Math.floor(letters.length / 2);
+            letters.forEach((letter, index) => {
+                const distance = index - centerIndex;
+                const angle = (Date.now() / 1000 + index) * 90;
+                const x = Math.sin(angle * Math.PI / 180) * 30;
+                const y = distance * 10;
+                setTimeout(() => {
+                    letter.style.transform = `translate(${x}px, ${y}px) rotateY(${angle}deg)`;
+                    letter.style.transition = 'transform 0.5s';
+                }, index * 30);
+            });
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                });
+            }, 2000);
+        }, 22000);
+
+        // Fireworks explosion
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                const angle = (index / letters.length) * 360;
+                const distance = 100;
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
+                letter.style.transform = `translate(${x}px, ${y}px) rotate(${angle * 2}deg) scale(2)`;
+                letter.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                letter.style.filter = 'brightness(3) drop-shadow(0 0 40px #ffff00)';
+                setTimeout(() => {
+                    letter.style.transform = '';
+                    letter.style.filter = '';
+                }, 600);
+            });
+        }, 24000);
+
+        // Ripple wave effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const center = Math.floor(letters.length / 2);
+            letters.forEach((letter, index) => {
+                const delay = Math.abs(index - center) * 100;
+                setTimeout(() => {
+                    letter.style.transform = 'scale(1.5) translateY(-40px)';
+                    letter.style.transition = 'transform 0.4s';
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                    }, 400);
+                }, delay);
+            });
+        }, 26000);
+
+        // Letter swap dance
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    letters.forEach((letter, index) => {
+                        if (index % 2 === 0) {
+                            letter.style.transform = 'translateY(-20px)';
+                        } else {
+                            letter.style.transform = 'translateY(20px)';
+                        }
+                        letter.style.transition = 'transform 0.2s';
+                    });
+                    setTimeout(() => {
+                        letters.forEach(letter => {
+                            letter.style.transform = '';
+                        });
+                    }, 200);
+                }, i * 400);
+            }
+        }, 28000);
+
+        // Zoom blast effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'scale(3)';
+                    letter.style.opacity = '0';
+                    letter.style.transition = 'all 0.5s';
+                    setTimeout(() => {
+                        letter.style.transform = 'scale(0.1)';
+                        letter.style.opacity = '0';
+                        setTimeout(() => {
+                            letter.style.transform = 'scale(1)';
+                            letter.style.opacity = '1';
+                        }, 200);
+                    }, 200);
+                }, index * 80);
+            });
+        }, 30000);
+
+        // Glitch effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                    if (randomLetter) {
+                        randomLetter.style.transform = `translateX(${Math.random() * 20 - 10}px) skew(${Math.random() * 20 - 10}deg)`;
+                        randomLetter.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                        setTimeout(() => {
+                            randomLetter.style.transform = '';
+                            randomLetter.style.filter = '';
+                        }, 50);
+                    }
+                }, i * 50);
+            }
+        }, 32000);
+
+        // Kaleidoscope rotation
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            let rotation = 0;
+            const kaleidoInterval = setInterval(() => {
+                rotation += 45;
+                letters.forEach((letter, index) => {
+                    const offset = index * 30;
+                    letter.style.transform = `rotate(${rotation + offset}deg) translateY(-30px) scale(${1 + Math.sin(rotation * Math.PI / 180) * 0.5})`;
+                });
+                if (rotation >= 360) {
+                    clearInterval(kaleidoInterval);
+                    letters.forEach(letter => {
+                        letter.style.transform = '';
+                    });
+                }
+            }, 100);
+        }, 34000);
+
+        // Heartbeat pulse
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let beat = 0; beat < 3; beat++) {
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.style.transform = 'scale(1.3)';
+                        letter.style.filter = 'brightness(1.5) drop-shadow(0 0 30px #ff0080)';
+                        letter.style.transition = 'all 0.1s';
+                    });
+                    setTimeout(() => {
+                        letters.forEach(letter => {
+                            letter.style.transform = 'scale(1)';
+                            letter.style.filter = '';
+                        });
+                    }, 100);
+                }, beat * 300);
+            }
+        }, 36000);
+
+        // Typewriter re-type effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.opacity = '0';
+                    letter.style.transition = 'opacity 0.1s';
+                }, index * 50);
+            });
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.opacity = '1';
+                    }, index * 50);
+                });
+            }, letters.length * 50 + 300);
+        }, 38000);
+
+        // Pendulum swing
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                const swing = Math.sin(Date.now() / 200 + index) * 30;
+                letter.style.transform = `rotate(${swing}deg) translateY(${Math.abs(swing)}px)`;
+                letter.style.transition = 'transform 0.3s';
+            });
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                });
+            }, 2000);
+        }, 40000);
+
+        // Mirror flip effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'scaleX(-1)';
+                    letter.style.transition = 'transform 0.3s';
+                    setTimeout(() => {
+                        letter.style.transform = 'scaleX(1)';
+                    }, 300);
+                }, index * 100);
+            });
+        }, 42000);
+
+        // Crazy random movement
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.style.transform = `translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * 0.4})`;
+                    });
+                }, i * 30);
+            }
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                    letter.style.transition = 'transform 0.5s';
+                });
+            }, 900);
+        }, 44000);
+
+        // Laser beam effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.filter = 'brightness(5) drop-shadow(0 0 60px #00ffff) blur(2px)';
+                    letter.style.transform = 'scaleX(3) scaleY(0.3)';
+                    letter.style.transition = 'all 0.1s';
+                    setTimeout(() => {
+                        letter.style.filter = '';
+                        letter.style.transform = '';
+                    }, 100);
+                }, index * 30);
+            });
+        }, 46000);
+
+        // Orbit effect
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const duration = 2000;
+            const startTime = Date.now();
+            const orbitInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+                letters.forEach((letter, index) => {
+                    const angle = (progress * 360 * 2 + index * (360 / letters.length)) * Math.PI / 180;
+                    const radius = 60;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+                    letter.style.transform = `translate(${x}px, ${y}px) rotate(${angle * 180 / Math.PI}deg)`;
+                });
+                if (elapsed >= duration) {
+                    clearInterval(orbitInterval);
+                    letters.forEach(letter => {
+                        letter.style.transform = '';
+                        letter.style.transition = 'transform 0.5s';
+                    });
+                }
+            }, 16);
+        }, 48000);
+
+        // Quantum fluctuation - random teleport
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(${Math.random() * 2})`;
+                    letter.style.opacity = '0.3';
+                    letter.style.transition = 'all 0.05s';
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                        letter.style.opacity = '1';
+                        letter.style.transition = 'all 0.3s';
+                    }, 50);
+                }, index * 20);
+            });
+        }, 50000);
+
+        // Supernova explosion
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                letter.style.transform = 'scale(0.1)';
+                letter.style.filter = 'brightness(10) drop-shadow(0 0 100px #ffffff)';
+                letter.style.transition = 'all 0.3s';
+            });
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    const angle = (index / letters.length) * 360;
+                    const distance = 200;
+                    const x = Math.cos(angle * Math.PI / 180) * distance;
+                    const y = Math.sin(angle * Math.PI / 180) * distance;
+                    letter.style.transform = `translate(${x}px, ${y}px) scale(3) rotate(${angle * 3}deg)`;
+                    letter.style.filter = 'brightness(5) blur(5px)';
+                    letter.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                });
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.style.transform = '';
+                        letter.style.filter = '';
+                        letter.style.transition = 'all 0.5s';
+                    });
+                }, 800);
+            }, 300);
+        }, 52000);
+
+        // Black hole suction
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = `scale(0) rotate(${720}deg)`;
+                    letter.style.filter = 'brightness(0)';
+                    letter.style.transition = 'all 0.8s';
+                }, index * 50);
+            });
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.transform = `scale(1.5) rotate(${-720}deg)`;
+                        letter.style.filter = 'brightness(2)';
+                        setTimeout(() => {
+                            letter.style.transform = '';
+                            letter.style.filter = '';
+                        }, 300);
+                    }, index * 50);
+                });
+            }, letters.length * 50 + 500);
+        }, 54000);
+
+        // Time freeze glitch
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let freeze = 0; freeze < 5; freeze++) {
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.style.filter = 'grayscale(1) contrast(10) brightness(2)';
+                        letter.style.transform = `skew(${Math.random() * 40 - 20}deg) scale(${1 + Math.random()})`;
+                    });
+                    setTimeout(() => {
+                        letters.forEach(letter => {
+                            letter.style.filter = '';
+                            letter.style.transform = '';
+                        });
+                    }, 100);
+                }, freeze * 200);
+            }
+        }, 56000);
+
+        // Dimension shift
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = `perspective(500px) rotateX(${90}deg) translateZ(100px)`;
+                    letter.style.opacity = '0';
+                    letter.style.transition = 'all 0.5s';
+                    setTimeout(() => {
+                        letter.style.transform = `perspective(500px) rotateX(${-90}deg) translateZ(-100px)`;
+                        setTimeout(() => {
+                            letter.style.transform = '';
+                            letter.style.opacity = '1';
+                        }, 200);
+                    }, 500);
+                }, index * 100);
+            });
+        }, 58000);
+
+        // Liquid metal morphing
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let morph = 0; morph < 20; morph++) {
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.style.transform = `scaleX(${0.5 + Math.random()}) scaleY(${0.5 + Math.random()}) skew(${Math.random() * 30 - 15}deg)`;
+                        letter.style.filter = `brightness(${1 + Math.random()}) hue-rotate(${Math.random() * 360}deg)`;
+                    });
+                }, morph * 50);
+            }
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                    letter.style.filter = '';
+                    letter.style.transition = 'all 0.3s';
+                });
+            }, 1000);
+        }, 60000);
+
+        // Magnetic field attraction
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const center = Math.floor(letters.length / 2);
+            letters.forEach((letter, index) => {
+                const distance = index - center;
+                const pull = distance === 0 ? 0 : 50 / Math.abs(distance);
+                const direction = distance > 0 ? -1 : 1;
+                setTimeout(() => {
+                    letter.style.transform = `translateX(${direction * pull}px) scale(${1.5 - Math.abs(distance) * 0.05})`;
+                    letter.style.transition = 'transform 0.5s';
+                }, Math.abs(distance) * 50);
+            });
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                });
+            }, 1500);
+        }, 62000);
+
+        // Sonic boom shockwave
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const center = Math.floor(letters.length / 2);
+            let wave = 0;
+            const waveInterval = setInterval(() => {
+                letters.forEach((letter, index) => {
+                    if (Math.abs(index - center) === wave) {
+                        letter.style.transform = 'scale(2) translateY(-50px)';
+                        letter.style.filter = 'brightness(3) blur(3px)';
+                        letter.style.transition = 'all 0.1s';
+                        setTimeout(() => {
+                            letter.style.transform = '';
+                            letter.style.filter = '';
+                        }, 100);
+                    }
+                });
+                wave++;
+                if (wave > Math.max(center, letters.length - center)) {
+                    clearInterval(waveInterval);
+                }
+            }, 100);
+        }, 64000);
+
+        // Rainbow trail continuous
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            let hue = 0;
+            const trailInterval = setInterval(() => {
+                letters.forEach((letter, index) => {
+                    letter.style.filter = `hue-rotate(${hue + index * 30}deg) brightness(1.5)`;
+                });
+                hue += 10;
+                if (hue >= 360) {
+                    clearInterval(trailInterval);
+                    letters.forEach(letter => {
+                        letter.style.filter = '';
+                    });
+                }
+            }, 50);
+        }, 66000);
+
+        // Tsunami wave
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    const wave = Math.sin(Date.now() / 100 + index) * 50;
+                    letter.style.transform = `translateY(${wave}px) rotate(${wave}deg)`;
+                    letter.style.transition = 'transform 0.2s';
+                }, index * 30);
+            });
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                });
+            }, 2000);
+        }, 68000);
+
+        // Earthquake vibration
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let shake = 0; shake < 50; shake++) {
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.style.transform = `translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px) rotate(${Math.random() * 10 - 5}deg)`;
+                    });
+                }, shake * 20);
+            }
+            setTimeout(() => {
+                letters.forEach(letter => {
+                    letter.style.transform = '';
+                    letter.style.transition = 'transform 0.3s';
+                });
+            }, 1000);
+        }, 70000);
+
+        // Volcano eruption
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.transform = 'translateY(-200px) rotate(360deg) scale(2)';
+                    letter.style.filter = 'brightness(3) drop-shadow(0 0 50px #ff4500)';
+                    letter.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    setTimeout(() => {
+                        letter.style.transform = 'translateY(0)';
+                        letter.style.filter = '';
+                        letter.style.transition = 'all 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045)';
+                    }, 800);
+                }, index * 80);
+            });
+        }, 72000);
+
+        // Lightning storm
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            for (let bolt = 0; bolt < 10; bolt++) {
+                setTimeout(() => {
+                    const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                    if (randomLetter) {
+                        randomLetter.style.filter = 'brightness(10) drop-shadow(0 0 80px #ffffff)';
+                        randomLetter.style.transform = 'scale(1.8)';
+                        setTimeout(() => {
+                            randomLetter.style.filter = '';
+                            randomLetter.style.transform = '';
+                        }, 50);
+                    }
+                }, bolt * 150);
+            }
+        }, 74000);
+
+        // Cosmic ray beam
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.filter = 'brightness(8) contrast(5) saturate(5) blur(4px)';
+                    letter.style.transform = `scaleY(5) scaleX(0.2) translateY(-100px)`;
+                    letter.style.transition = 'all 0.2s';
+                    setTimeout(() => {
+                        letter.style.filter = '';
+                        letter.style.transform = '';
+                    }, 200);
+                }, index * 40);
+            });
+        }, 76000);
+
+        // Particle disintegration
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.filter = 'blur(10px) opacity(0.3)';
+                    letter.style.transform = `scale(2) rotate(${Math.random() * 360}deg)`;
+                    letter.style.transition = 'all 0.6s';
+                    setTimeout(() => {
+                        letter.style.filter = 'blur(0px) opacity(1)';
+                        letter.style.transform = 'scale(1)';
+                    }, 600);
+                }, index * 70);
+            });
+        }, 78000);
+
+        // Wormhole portal
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                const angle = (index / letters.length) * 360;
+                letter.style.transform = `rotate(${angle * 5}deg) scale(0.1)`;
+                letter.style.filter = 'blur(5px)';
+                letter.style.transition = 'all 0.8s';
+            });
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.transform = 'scale(1.3)';
+                        letter.style.filter = 'blur(0px) brightness(1.5)';
+                        setTimeout(() => {
+                            letter.style.transform = '';
+                            letter.style.filter = '';
+                        }, 300);
+                    }, index * 50);
+                });
+            }, 800);
+        }, 80000);
+
+        // Neon glow pulse chain
+        setInterval(() => {
+            const letters = document.querySelectorAll('.letter');
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00', '#ff0000', '#0000ff'];
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    const color = colors[index % colors.length];
+                    letter.style.filter = `drop-shadow(0 0 60px ${color}) brightness(2.5)`;
+                    letter.style.transform = 'scale(1.4)';
+                    letter.style.transition = 'all 0.3s';
+                    setTimeout(() => {
+                        letter.style.filter = '';
+                        letter.style.transform = '';
+                    }, 300);
+                }, index * 100);
+            });
+        }, 82000);
+
+        // ========== BLACK HOLE CONTINUOUS LOOP ==========
+        // This runs continuously and loops forever
+        function blackHoleLoop() {
+            const letters = document.querySelectorAll('.letter');
+            const blackHole = document.getElementById('blackHole');
+            const accretionDisk = document.getElementById('accretionDisk');
+            const container = document.querySelector('.name-container');
+            
+            // Phase 1: Black hole appears (0-2s)
+            setTimeout(() => {
+                blackHole.style.width = '250px';
+                blackHole.style.height = '250px';
+                blackHole.style.opacity = '1';
+                blackHole.style.boxShadow = '0 0 100px 50px rgba(255, 100, 0, 0.8), inset 0 0 100px rgba(0, 0, 0, 1)';
+                
+                accretionDisk.style.width = '500px';
+                accretionDisk.style.height = '500px';
+                accretionDisk.style.opacity = '1';
+            }, 0);
+
+            // Phase 2: Gravitational pull starts (2-3s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.classList.add('lensing-active');
+                    }, index * 30);
+                });
+            }, 2000);
+
+            // Phase 3: Letters start getting pulled (3-5s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        const containerRect = container.getBoundingClientRect();
+                        const letterRect = letter.getBoundingClientRect();
+                        const centerX = window.innerWidth / 2;
+                        const centerY = window.innerHeight / 2;
+                        
+                        // Calculate direction to black hole
+                        const deltaX = centerX - (letterRect.left + letterRect.width / 2);
+                        const deltaY = centerY - (letterRect.top + letterRect.height / 2);
+                        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                        
+                        // Spiral motion towards black hole
+                        const angle = Math.atan2(deltaY, deltaX);
+                        const spiralAngle = angle + (index * 0.5);
+                        
+                        letter.style.transform = `
+                            translate(${deltaX * 0.3}px, ${deltaY * 0.3}px) 
+                            rotate(${index * 60}deg) 
+                            scale(0.8)
+                        `;
+                        letter.style.filter = 'brightness(1.5) blur(1px)';
+                        letter.style.transition = 'all 0.8s ease-in';
+                    }, index * 50);
+                });
+            }, 3000);
+
+            // Phase 4: Spaghettification effect (5-7s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        const containerRect = container.getBoundingClientRect();
+                        const letterRect = letter.getBoundingClientRect();
+                        const centerX = window.innerWidth / 2;
+                        const centerY = window.innerHeight / 2;
+                        
+                        const deltaX = centerX - (letterRect.left + letterRect.width / 2);
+                        const deltaY = centerY - (letterRect.top + letterRect.height / 2);
+                        
+                        // Extreme stretching (spaghettification)
+                        letter.style.transform = `
+                            translate(${deltaX * 0.7}px, ${deltaY * 0.7}px) 
+                            scaleY(3) 
+                            scaleX(0.3) 
+                            rotate(${index * 120 + 360}deg)
+                        `;
+                        letter.style.filter = 'brightness(2) blur(3px) hue-rotate(180deg)';
+                        letter.style.transition = 'all 0.6s ease-in';
+                    }, index * 40);
+                });
+            }, 5000);
+
+            // Phase 5: Event horizon crossing - letters disappear (7-9s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.transform = 'translate(0px, 0px) scale(0) rotate(720deg)';
+                        letter.style.opacity = '0';
+                        letter.style.filter = 'brightness(0) blur(10px)';
+                        letter.style.transition = 'all 0.5s ease-in';
+                    }, index * 30);
+                });
+            }, 7000);
+
+            // Phase 6: Black hole intensifies (9-10s)
+            setTimeout(() => {
+                blackHole.style.boxShadow = '0 0 200px 100px rgba(255, 100, 0, 1), inset 0 0 150px rgba(0, 0, 0, 1)';
+                blackHole.style.transform = 'translate(-50%, -50%) scale(1.2)';
+            }, 9000);
+
+            // Phase 7: Hawking radiation - letters start emerging (10-12s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.opacity = '0.3';
+                        letter.style.transform = 'translate(0px, 0px) scale(0.1) rotate(-720deg)';
+                        letter.style.filter = 'brightness(5) blur(8px) hue-rotate(360deg)';
+                        letter.style.transition = 'all 0.01s';
+                    }, index * 30);
+                });
+            }, 10000);
+
+            // Phase 8: Letters explode outward (12-14s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        const angle = (index / letters.length) * 360;
+                        const distance = 150;
+                        const x = Math.cos(angle * Math.PI / 180) * distance;
+                        const y = Math.sin(angle * Math.PI / 180) * distance;
+                        
+                        letter.style.transform = `translate(${x}px, ${y}px) scale(1.5) rotate(${angle * 2}deg)`;
+                        letter.style.opacity = '1';
+                        letter.style.filter = 'brightness(3) blur(2px)';
+                        letter.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                    }, index * 40);
+                });
+            }, 12000);
+
+            // Phase 9: Letters return to normal position (14-16s)
+            setTimeout(() => {
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.transform = '';
+                        letter.style.opacity = '1';
+                        letter.style.filter = '';
+                        letter.style.transition = 'all 1s ease-out';
+                        letter.classList.remove('lensing-active');
+                    }, index * 50);
+                });
+            }, 14000);
+
+            // Phase 10: Black hole disappears (16-18s)
+            setTimeout(() => {
+                blackHole.style.width = '0px';
+                blackHole.style.height = '0px';
+                blackHole.style.opacity = '0';
+                blackHole.style.transform = 'translate(-50%, -50%) scale(0)';
+                blackHole.style.boxShadow = '0 0 100px 50px rgba(255, 100, 0, 0), inset 0 0 100px rgba(0, 0, 0, 1)';
+                
+                accretionDisk.style.width = '0px';
+                accretionDisk.style.height = '0px';
+                accretionDisk.style.opacity = '0';
+            }, 16000);
+
+            // Phase 11: Wait before next cycle (18-25s)
+            // Letters continue with their normal animations during this time
+            
+            // Loop: Restart the entire black hole cycle (25s)
+            setTimeout(() => {
+                blackHoleLoop(); // Recursive call for infinite loop
+            }, 25000);
+        }
+
+        // Start the black hole loop after letters have appeared (5 seconds after page load)
+        setTimeout(() => {
+            blackHoleLoop();
+        }, 5000);
+    
+    </script>
+</body>
+</html>
